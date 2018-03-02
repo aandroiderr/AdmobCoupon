@@ -107,7 +107,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// Initialize Firebase for iOS.
 	firebase::App* app = firebase::App::Create(firebase::AppOptions());
 	// Initialize AdMob.
-	firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~8352844340");
+	//firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~8352844340");
+    firebase::admob::Initialize(*app, "ca-app-pub-3940256099942544~1458002511");
 #endif
 	//KietLe
     firebase::admob::rewarded_video::Initialize();

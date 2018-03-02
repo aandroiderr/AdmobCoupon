@@ -19,19 +19,78 @@
 
 USING_NS_CC;
 
-#if defined(__ANDROID__)
-const char* kAppID = "ca-app-pub-1303483077276475~2486975815";
-const char* kBannerAdUnit = "ca-app-pub-3940256099942544/6300978111";
-const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/1033173712";
-const char* kRewardedAdUnit = "ca-app-pub-3940256099942544/1033173712";
+//#if defined(__ANDROID__)
+//const char* kAppID =                "ca-app-pub-1303483077276475~7139293421";
+//const char* kBannerAdUnit =         "ca-app-pub-1303483077276475/2068173417";
+//const char* kInterstitialAdUnit =   "ca-app-pub-1303483077276475/2653608726";
+//const char* kRewardedAdUnit =       "ca-app-pub-1303483077276475/4106291192";
+//#else
+//const char* kAppID =                "ca-app-pub-1303483077276475~2486975815";
+//const char* kBannerAdUnit =         "ca-app-pub-1303483077276475/6346329779";
+//const char* kInterstitialAdUnit =   "ca-app-pub-1303483077276475/5483430970";
+//const char* kRewardedAdUnit =       "ca-app-pub-1303483077276475/3197422259";
+//#endif
+
+// The AdMob app IDs.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+const char* kAdMobAppID = "ca-app-pub-3940256099942544~3347511713";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+const char* kAdMobAppID = "ca-app-pub-3940256099942544~1458002511";
 #else
-const char* kAppID =                "ca-app-pub-1303483077276475~2486975815";
-const char* kBannerAdUnit =         "ca-app-pub-1303483077276475/6346329779";
-const char* kInterstitialAdUnit =   "ca-app-pub-1303483077276475/5483430970";
-const char* kRewardedAdUnit =       "ca-app-pub-1303483077276475/3197422259";
+const char* kAdMobAppID = "";
+#endif
+
+// These ad units are configured to always serve test ads.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/6300978111";
+const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/1033173712";
+const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/2888167318";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
+const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/4411468910";
+const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/6386090517";
+#else
+const char* kAdViewAdUnit = "";
+const char* kInterstitialAdUnit = "";
+const char* kRewardedVideoAdUnit = "";
 #endif
 
 namespace rewarded_video = firebase::admob::rewarded_video;
+
+
+/// This function is called when the Future for the last call to
+/// rewarded_video::LoadAd() method completes.
+static void onRewardedVideoLoadAdCompletionCallback(
+                                                    const firebase::Future<void>& future, void* userData) {
+    HelloWorld* scene = static_cast<HelloWorld*>(userData);
+    if (future.error() == firebase::admob::kAdMobErrorNone) {
+        log("Loading rewarded video completed successfully.");
+        scene->showVideo();
+    } else {
+        log("Loading rewarded video failed.");
+        log(
+                          "ERROR: Action failed with error code %d and message \"%s\".",
+                          future.error(), future.error_message());
+        // Rewarded Video returned an error. This might be because the developer did
+        // not put their Rewarded Video ad unit into kRewardedVideoAdUnit above.
+        log("WARNING: Is your Rewarded Video ad unit ID correct?");
+        log(
+                          "Ensure kRewardedVideoAdUnit is set to your own Rewarded Video ad unit "
+                          "ID.");
+    }
+}
+
+
+static void onRewardedVideoShowAdCompletionCallback(
+                                                    const firebase::Future<void>& future, void* userData) {
+    HelloWorld* scene = static_cast<HelloWorld*>(userData);
+    if (future.error() == firebase::admob::kAdMobErrorNone) {
+        log("Show rewarded video completed successfully.");
+    } else {
+        log("Show rewarded video with error code[%d][%s]",future.error(), future.error_message());
+    }
+}
+
 
 Scene* HelloWorld::createScene()
 {
@@ -109,107 +168,49 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(sprite, 0);
-	interstitial_ad = NULL;
-	
-	//LoadInterstitial();
-	
-	//LoadRewardedVideo();
-			
-	// Schedule updates so that the Cocos2d-x update() method gets called.
-	//this->scheduleUpdate();
-
-    //KIETLE
-    CCLOG("====%s","Im here");
-    _state = kNextStepLoadAd;
-    scheduleUpdate();
+		
+//    _state = kNextStepLoadAd;
+//    scheduleUpdate();
 	
     return true;
 }
 
 void HelloWorld::LoadInterstitial()
 {
-//    #if defined(__ANDROID__)
-//    // Android ad unit IDs.
-//    const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/2130553480";
-//    #endif
-//
-//    // Create and initialize banner view.
-//
-//    interstitial_ad = new firebase::admob::InterstitialAd();
-//    // my_ad_parent is a reference to an iOS UIView or an Android Activity.
-//    // This is the parent UIView or Activity of the interstitial ad.
-//    interstitial_ad->Initialize(getAdParent(), kInterstitialAdUnit);
-//    
-//    // Initialize all the AdRequest struct member values to zero.
-//    firebase::admob::AdRequest my_ad_request = {};
-//    interstitial_ad->LoadAd(my_ad_request);
 }
 
 void HelloWorld::LoadRewardedVideo()
-{		
-	if(firebase::admob::rewarded_video::InitializeLastResult().status() == firebase::kFutureStatusComplete &&
-	   firebase::admob::rewarded_video::InitializeLastResult().error() == firebase::admob::kAdMobErrorNone)
-	{
-		firebase::admob::AdRequest my_ad_request = {};
-		static const char* kTestDeviceIDs[] = {"bc5032b2a871da511332401af3ac6bb0"};
-		//my_ad_request.test_device_id_count = sizeof(kTestDeviceIDs) / sizeof(kTestDeviceIDs[0]);
-		//my_ad_request.test_device_ids = kTestDeviceIDs;
-		//firebase::admob::rewarded_video::LoadAd("ca-app-pub-4335424038866907/6860135984", my_ad_request);
-        firebase::admob::rewarded_video::LoadAd(kRewardedAdUnit, my_ad_request);
-	}
+{
 }
 
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
+    firebase::admob::rewarded_video::LoadAd(kRewardedVideoAdUnit, createAdRequest());
+    rewarded_video::LoadAdLastResult().OnCompletion(onRewardedVideoLoadAdCompletionCallback, this);
 }
 
-bool g_adShown = false;
+firebase::admob::AdRequest HelloWorld::createAdRequest(){
+    firebase::admob::AdRequest my_ad_request = {};
+    static const char* kTestDeviceIDs[] = {
+        "bc5032b2a871da511332401af3ac6bb0",
+        "DD07D83E04F8C06551082531F7E2B8DB"};
+    my_ad_request.test_device_id_count = sizeof(kTestDeviceIDs) / sizeof(kTestDeviceIDs[0]);
+    my_ad_request.test_device_ids = kTestDeviceIDs;
+    return my_ad_request;
+}
 
 void HelloWorld::update(float delta) 
 {
-	// Uncomment this for interstitial
-	/*if (interstitial_ad->LoadAdLastResult().status() == firebase::kFutureStatusComplete &&
-		interstitial_ad->LoadAdLastResult().error() == firebase::admob::kAdMobErrorNone) 
-			interstitial_ad->Show();*/
-	
-	// Rewarded video	
-//	if (firebase::admob::rewarded_video::LoadAdLastResult().status() == firebase::kFutureStatusComplete &&
-//		firebase::admob::rewarded_video::LoadAdLastResult().error() == firebase::admob::kAdMobErrorNone)
-//	{
-//		if(!g_adShown)
-//		{
-//			firebase::admob::rewarded_video::Show(getAdParent());
-//			g_adShown = true;
-//		}
-//	}
-
-    CCLOG("===state[%d]", _state);
+    //CCLOG("===state[%d]", _state);
 
     switch(_state){
         case kNextStepLoadAd:
             if(firebase::admob::rewarded_video::InitializeLastResult().status() == firebase::kFutureStatusComplete &&
                firebase::admob::rewarded_video::InitializeLastResult().error() == firebase::admob::kAdMobErrorNone)
             {
-                firebase::admob::AdRequest my_ad_request = {};
-                static const char* kTestDeviceIDs[] = {"bc5032b2a871da511332401af3ac6bb0", "DD07D83E04F8C06551082531F7E2B8DB"};
-                my_ad_request.test_device_id_count = sizeof(kTestDeviceIDs) / sizeof(kTestDeviceIDs[0]);
-                my_ad_request.test_device_ids = kTestDeviceIDs;
-                firebase::admob::rewarded_video::LoadAd("ca-app-pub-4335424038866907/6860135984", my_ad_request);
-                //firebase::admob::rewarded_video::LoadAd(kRewardedAdUnit, my_ad_request);
+                //firebase::admob::rewarded_video::LoadAd("ca-app-pub-4335424038866907/6860135984", my_ad_request);
+                firebase::admob::rewarded_video::LoadAd(kRewardedVideoAdUnit, createAdRequest());
                 _state = kNextStepShowAd;
             }
             break;
@@ -239,37 +240,8 @@ void HelloWorld::update(float delta)
     }
 }
 
-void HelloWorld::initUnityAdsFunc()
-{
-    const char* gameId = "1055529"; // for Android
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    gameId = "1076532";
-#endif
-    
-    UnityAdsInit(gameId, false);
-}
-
-void HelloWorld::showUnityAdsFunc(Ref* pSender)
-{
-    const char* zoneString = "rewardedVideo";
-    
-    if(UnityAdsIsReady(zoneString)) {
-        UnityAdsShow(zoneString);
-    } else {
-        CCLOG("[UnityAds cpp test] yet cannot show");
-    }
-}
-
-void HelloWorld::rewardPlayer(const char *placementId)
-{
-
-    CCLOG("[UnityAds cpp test] rewarded");
-    const char* targetStr = "rewardedVideo";
-    if(strcmp(placementId, targetStr) == 0){
-        if(titleLabel){
-            const char* text = "Congrats!";
-            titleLabel->setString(text);
-        }
-    }
+void HelloWorld::showVideo(){
+    log("===show video");
+    rewarded_video::Show(getAdParent());
+    rewarded_video::ShowLastResult().OnCompletion(onRewardedVideoShowAdCompletionCallback, this);
 }

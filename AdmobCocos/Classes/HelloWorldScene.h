@@ -2,15 +2,9 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-#include "UnityAdsNativeAPI.h"
-
-namespace firebase
-{
-	namespace admob
-	{
-		class InterstitialAd;
-	}
-}
+#include "firebase/app.h"
+#include "firebase/admob.h"
+#include "firebase/admob/types.h"
 
 class HelloWorld : public cocos2d::Scene
 {
@@ -36,10 +30,6 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 	
-	// Unity Ads
-    void rewardPlayer(const char *placementId);
-    void initUnityAdsFunc();
-    void showUnityAdsFunc(Ref* pSender);
 	
 private:
 	void LoadInterstitial();
@@ -47,8 +37,12 @@ private:
 	
 	virtual void update(float delta);
 private:
-	firebase::admob::InterstitialAd* interstitial_ad;
 	cocos2d::Label* titleLabel;
+    
+public:
+    firebase::admob::AdRequest createAdRequest();
+    void showVideo();
+    
 };
 
 #endif // __HELLOWORLD_SCENE_H__
