@@ -16,16 +16,12 @@ using namespace cocos2d::experimental;
 using namespace CocosDenshion;
 #endif
 
-#include "firebase/app.h"
-#include "firebase/admob.h"
-#include "firebase/admob/rewarded_video.h"
-
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
+static cocos2d::Size designResolutionSize = cocos2d::Size(320, 480);
+static cocos2d::Size smallResolutionSize = cocos2d::Size(320, 480);
+static cocos2d::Size mediumResolutionSize = cocos2d::Size(768, 1024);
+static cocos2d::Size largeResolutionSize = cocos2d::Size(1536,2048);
 
 AppDelegate::AppDelegate()
 {
@@ -97,22 +93,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    // Initialize Firebase for Android.
-//    firebase::App* app = firebase::App::Create(
-//    firebase::AppOptions(), JniHelper::getEnv(), JniHelper::getActivity());
-//    // Initialize AdMob.
-//    firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~2928103176");
-//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//    // Initialize Firebase for iOS.
-//    firebase::App* app = firebase::App::Create(firebase::AppOptions());
-//    // Initialize AdMob.
-//    //firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~8352844340");
-//    firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~2928103176");
-//#endif
-//    //KietLe
-//    firebase::admob::rewarded_video::Initialize();
-    // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
 
     // run

@@ -15,6 +15,8 @@
 		294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D631D0D56D500F7F5D4 /* CoreText.framework */; };
 		2A61FBD020493E2C00182BBF /* AdmobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */; };
 		2A61FBD120493E2C00182BBF /* AdmobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */; };
+		2A61FBD420494E0E00182BBF /* AdCoupon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A61FBD220494E0E00182BBF /* AdCoupon.cpp */; };
+		2A61FBD520494E0E00182BBF /* AdCoupon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A61FBD220494E0E00182BBF /* AdCoupon.cpp */; };
 		2AC7025A2047A22100F06640 /* firebase_admob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC702582047A22100F06640 /* firebase_admob.framework */; };
 		2AC7025B2047A22100F06640 /* firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC702592047A22100F06640 /* firebase.framework */; };
 		2AC7025F2047A2AE00F06640 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC7025D2047A2AE00F06640 /* GameController.framework */; };
@@ -130,6 +132,8 @@
 		2A0653E0204920D500F0D7DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdmobManager.cpp; sourceTree = "<group>"; };
 		2A61FBCF20493E2C00182BBF /* AdmobManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdmobManager.h; sourceTree = "<group>"; };
+		2A61FBD220494E0E00182BBF /* AdCoupon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdCoupon.cpp; sourceTree = "<group>"; };
+		2A61FBD320494E0E00182BBF /* AdCoupon.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AdCoupon.hpp; sourceTree = "<group>"; };
 		2AC702582047A22100F06640 /* firebase_admob.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_admob.framework; path = ../../firebase_cpp_sdk/frameworks/ios/universal/firebase_admob.framework; sourceTree = "<group>"; };
 		2AC702592047A22100F06640 /* firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase.framework; path = ../../firebase_cpp_sdk/frameworks/ios/universal/firebase.framework; sourceTree = "<group>"; };
 		2AC7025D2047A2AE00F06640 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
@@ -338,6 +342,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2A61FBD220494E0E00182BBF /* AdCoupon.cpp */,
+				2A61FBD320494E0E00182BBF /* AdCoupon.hpp */,
 				2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */,
 				2A61FBCF20493E2C00182BBF /* AdmobManager.h */,
 				2AC702652047A82900F06640 /* FirebaseHelper.cpp */,
@@ -623,6 +629,7 @@
 				2A61FBD120493E2C00182BBF /* AdmobManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				2AC702672047A82900F06640 /* FirebaseHelper.cpp in Sources */,
+				2A61FBD520494E0E00182BBF /* AdCoupon.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -631,6 +638,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A61FBD420494E0E00182BBF /* AdCoupon.cpp in Sources */,
 				2AC702662047A82900F06640 /* FirebaseHelper.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				2A61FBD020493E2C00182BBF /* AdmobManager.cpp in Sources */,
