@@ -8,9 +8,9 @@
 #include <sstream>
 #include <stdexcept>
 #include <iomanip>
-//#include "AdCoupon.hpp"
+#include "AdmobManager.h"
 
-class HelloWorld : public cocos2d::Scene
+class HelloWorld : public cocos2d::Layer, public AdmobManagerDelegate
 {
 public:
     
@@ -57,7 +57,8 @@ public:
     }
 
     
-    static cocos2d::Scene* createScene();
+    ~HelloWorld();
+    
 	void callbackFromJS(cocos2d::experimental::ui::WebView* webview, const std::string &answer);
     virtual bool init();
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
@@ -69,6 +70,14 @@ public:
 
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+    
+    //AdManager Delegate
+    virtual void AdmobManagerOnInterstitialClose();
+    virtual void AdmobManagerOnVideoClose();
+    
+    void inititial();
+    void showCoupon();
+    void showInterstitial();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -11,18 +11,9 @@
 USING_NS_CC;
 
 using namespace std;
-cocos2d::Label *notificationLabel;
 
-Scene* HelloWorld::createScene()
-{
-    return HelloWorld::create();
-}
-
-// Print useful error message instead of segfaulting when files are not there.
-static void problemLoading(const char* filename)
-{
-    printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+HelloWorld::~HelloWorld(){
+    AdmobManager::getInstance()->setDelegate(nullptr);
 }
 
 void HelloWorld::callbackFromJS(cocos2d::experimental::ui::WebView* webview, const std::string &answer) {
@@ -32,7 +23,6 @@ void HelloWorld::callbackFromJS(cocos2d::experimental::ui::WebView* webview, con
         this->_webView->removeFromParentAndCleanup(true);
     }else if (response.find("redeem.com") != std::string::npos) {
         
-        size_t pos = 0;
         std::vector<std::string> vcListVector;
         std::string delimiter="redeem.com";
         std::string strTmp = response;
@@ -63,7 +53,8 @@ void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE||keyCode==EventKeyboard::KeyCode::KEY_BACK||keyCode == EventKeyboard::KeyCode::KEY_BACKSPACE)
     {
-        if( this->_webView->getParent()){event->stopPropagation();
+        if( this->_webView->getParent()){
+            event->stopPropagation();
             this->_webView->removeFromParentAndCleanup(true);
             
         }else{
@@ -74,84 +65,53 @@ void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    if ( !Scene::init() )
+    if ( !Layer::init() )
     {
         return false;
     }
-
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
-    addChild(LayerColor::create(Color4B(225,225,225,255), visibleSize.width, visibleSize.height));
-    
-    
-    notificationLabel = Label::createWithTTF("--", "res/adcoupon_assets/SourceSansPro-Bold.ttf", 30);
-    notificationLabel->setPosition(Vec2(visibleSize.width * 0.5, visibleSize.height * 0.25));
-    notificationLabel->setTextColor(Color4B::BLUE);
-    addChild(notificationLabel);
-
-
-
 
     auto touchListener = EventListenerKeyboard::create();
     touchListener->onKeyReleased =CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener,this);
 
-
-    ui::Button *close = ui::Button::create();
-    close->setTitleFontName("res/adcoupon_assets/SourceSansPro-Bold.ttf");
-    close->setContentSize(Size(300, 60));
-    close->setTitleText("Open Offer Wall");
-    close->setTitleColor(Color3B::YELLOW);
-    close->setPressedActionEnabled(true);
-    close->setTitleFontSize(25);
-    close->setPosition(getContentSize() * 0.5);
-    close->addTouchEventListener([this](Ref *ref, ui::Widget::TouchEventType t){
-        if (t == ui::Widget::TouchEventType::ENDED) {
-        //    AdCoupon::showCoupons();
-
-            _webView = experimental::ui::WebView::create();
-            _webView->setContentSize(Size(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height));
-            Point origin=Director::getInstance()->getVisibleOrigin();
-            _webView->setAnchorPoint(Vec2(0,0));
-            _webView->setPosition(origin);
-            _webView->setJavascriptInterfaceScheme("cocos2dx");
-            _webView->loadURL("https://norahabsentia.github.io/coupons-webview-webpage/index.html");
-            _webView->setOnJSCallback(CC_CALLBACK_2(HelloWorld::callbackFromJS,this));
-            _webView->setFocusEnabled(false);
-            _webView->setFocused(false);
-            this->addChild(_webView);
-        }
-    });
-    
-    addChild(close);
-    
+    //init admob
+    AdmobManager::getInstance()->initialize(this);
     
     return true;
 }
 
-#pragma mark -AdCouponDelegate
 void HelloWorld::adCouponOnClickToUnlock() {
-    CCLOG("COUPONS");
     log("coupon on click to unlock!");
-    notificationLabel->setString("coupon on click to unlock!");
-    
-    ui::Button *close = ui::Button::create();
-    close->setTitleFontName("res/adcoupon_assets/SourceSansPro-Bold.ttf");
-    close->setContentSize(Size(300, 60));
-    close->setName("i_watched_ad_button");
-    close->setTitleText("I watched rewarded video!");
-    close->setTitleColor(Color3B::GREEN);
-    close->setPressedActionEnabled(true);
-    close->setTitleFontSize(25);
-    close->setPosition(Vec2(getContentSize().width * 0.5f, getContentSize().height * 0.1));
-    close->addTouchEventListener([this](Ref *ref, ui::Widget::TouchEventType t){
-        if (t == ui::Widget::TouchEventType::ENDED) {
-            //AdCoupon::showRedeemCoupon();
-            auto bt = dynamic_cast<cocos2d::ui::Button *>(ref);
-            bt->removeFromParent();
-        }
-    });
-    
-    this->addChild(close,5);close->setGlobalZOrder(10);
+    AdmobManager::getInstance()->showVideoAds();
+}
+
+void HelloWorld::inititial(){
+}
+
+void HelloWorld::showCoupon(){
+    _webView = experimental::ui::WebView::create();
+    _webView->setContentSize(Size(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height));
+    Point origin=Director::getInstance()->getVisibleOrigin();
+    _webView->setAnchorPoint(Vec2(0,0));
+    _webView->setPosition(origin);
+    _webView->setJavascriptInterfaceScheme("cocos2dx");
+    _webView->loadURL("https://norahabsentia.github.io/coupons-webview-webpage/index.html");
+    _webView->setOnJSCallback(CC_CALLBACK_2(HelloWorld::callbackFromJS,this));
+    _webView->setFocusEnabled(false);
+    _webView->setFocused(false);
+    this->addChild(_webView);
+}
+
+void HelloWorld::showInterstitial(){
+    AdmobManager::getInstance()->showInterstitialAds();
+}
+
+#pragma mark AdManagerDelegate
+void HelloWorld::AdmobManagerOnVideoClose(){
+    cocos2d::log("===video close");
+}
+
+void HelloWorld::AdmobManagerOnInterstitialClose(){
+    cocos2d::log("===interstitial close");
+    showCoupon();
 }
