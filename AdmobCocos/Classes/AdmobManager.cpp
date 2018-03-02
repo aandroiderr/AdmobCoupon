@@ -39,7 +39,7 @@ const char* kInterstitialAdUnit = "";
 const char* kRewardedVideoAdUnit = "";
 #endif
 
-
+#pragma VIDEO ADS CALLBACK
 static void onRewardedVideoLoadAdCompletionCallback(
                                                     const firebase::Future<void>& future, void* userData) {
     
@@ -51,7 +51,6 @@ static void onRewardedVideoLoadAdCompletionCallback(
 }
 
 
-// A simple listener that logs changes to rewarded video state.
 class LoggingRewardedVideoListener
 : public firebase::admob::rewarded_video::Listener {
 public:
@@ -67,11 +66,32 @@ public:
 };
 
 
+#pragma INTERSTITIAL CALLBACK
+static void onInterstitialLoadAdCompletionCallback(
+                                                    const firebase::Future<void>& future, void* userData) {
+    firebase::admob::InterstitialAd * ads = static_cast<firebase::admob::InterstitialAd*>(userData);
+    if (future.error() == firebase::admob::kAdMobErrorNone) {
+        ads->Show();
+    } else {
+    }
+}
+
+class LoggingInterstitialListener : public firebase::admob::InterstitialAd::Listener{
+    
+    virtual void OnPresentationStateChanged(firebase::admob::InterstitialAd* interstitial_ad,
+                                            firebase::admob::InterstitialAd::PresentationState state) {
+        
+    }
+};
+
+
 #pragma AmobManager
 
 AdmobManager * AdmobManager::_instance = nullptr;
 
 AdmobManager::AdmobManager():
+_interstitialAds(nullptr),
+_isInit(false),
 _rewardedVideoListener(nullptr)
 {
 }
@@ -84,6 +104,9 @@ AdmobManager* AdmobManager::getInstance(){
 }
 
 void AdmobManager::initialize(AdmobManagerDelegate *del) {
+    if (_isInit) return;
+    _isInit = true;
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // Initialize Firebase for Android.
     firebase::App* app = firebase::App::Create(
@@ -96,9 +119,13 @@ void AdmobManager::initialize(AdmobManagerDelegate *del) {
     firebase::admob::Initialize(*app, kAdMobAppID);
 #endif
     
-    
-    //KietLe
+
+    //init reward video
     firebase::admob::rewarded_video::Initialize();
+    
+    //init interstitial
+    _interstitialAds = new firebase::admob::InterstitialAd();
+    _interstitialAds->Initialize(getAdParent(), kInterstitialAdUnit);
 }
 
 void AdmobManager::setDelegate(AdmobManagerDelegate *del) {
@@ -122,5 +149,12 @@ void AdmobManager::showVideoAds(){
     
     firebase::admob::rewarded_video::LoadAd(kRewardedVideoAdUnit, createAdRequest());
     rewarded_video::LoadAdLastResult().OnCompletion(onRewardedVideoLoadAdCompletionCallback, this);
+}
+
+void AdmobManager::showInterstitialAds(){
+    
+    //_interstitialAds->SetListener();
+    _interstitialAds->LoadAd(createAdRequest());
+    _interstitialAds->LoadAdLastResult().OnCompletion(onInterstitialLoadAdCompletionCallback, _interstitialAds);
 }
 

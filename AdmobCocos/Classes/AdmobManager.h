@@ -51,20 +51,23 @@ private:
     AdmobManager();
     static AdmobManager * _instance;
     AdmobManagerDelegate *delegate;
-
+    bool _isInit;
+    firebase::admob::InterstitialAd * _interstitialAds;
+    
 public:
     static AdmobManager * getInstance();
     
     firebase::admob::rewarded_video::Listener * _rewardedVideoListener;
+    
     firebase::admob::AdRequest createAdRequest();
     
-public:
-
     void initialize(AdmobManagerDelegate *del = nullptr);
     
     void setDelegate(AdmobManagerDelegate *del);
     
     void showVideoAds();
+    
+    void showInterstitialAds();
     
 };
 
