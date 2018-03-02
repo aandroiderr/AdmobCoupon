@@ -3,12 +3,12 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "HelloWorldScene.h"
+#include "AdmobCouponWrapper.h"
 
 class TestScene : public cocos2d::Scene
 {
 private:
-    HelloWorld * _couponWrapper;
+    AdmobCouponWrapper * _couponWrapper;
     
 public:
   

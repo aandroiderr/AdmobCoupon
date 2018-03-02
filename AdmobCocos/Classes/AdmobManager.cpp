@@ -14,55 +14,55 @@
 USING_NS_CC;
 namespace rewarded_video = firebase::admob::rewarded_video;
 
-// By Google
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-const char* kAdMobAppID = "ca-app-pub-3940256099942544~3347511713";
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-const char* kAdMobAppID = "ca-app-pub-3940256099942544~1458002511";
-#else
-const char* kAdMobAppID = "";
-#endif
-
-//// These ad units are configured to always serve test ads.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/6300978111";
-const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/1033173712";
-const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/2888167318";
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
-const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/4411468910";
-const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/6386090517";
-#else
-const char* kAdViewAdUnit = "";
-const char* kInterstitialAdUnit = "";
-const char* kRewardedVideoAdUnit = "";
-#endif
-
-//// The AdMob app IDs.
+//// By Google
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//const char* kAdMobAppID = "ca-app-pub-4335424038866907~2928103176";
+//const char* kAdMobAppID = "ca-app-pub-3940256099942544~3347511713";
 //#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-//const char* kAdMobAppID = "ca-app-pub-4335424038866907~2928103176";
+//const char* kAdMobAppID = "ca-app-pub-3940256099942544~1458002511";
 //#else
 //const char* kAdMobAppID = "";
 //#endif
 //
-//// These ad units are configured to always serve test ads.
+////// These ad units are configured to always serve test ads.
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
-////const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/2130553480";//old
-//const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/9147645139";//new
-//const char* kRewardedVideoAdUnit = "ca-app-pub-4335424038866907/6860135984";
+//const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/6300978111";
+//const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/1033173712";
+//const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/2888167318";
 //#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 //const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
-////const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/2130553480";//old
-//const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/9147645139";//new
-//const char* kRewardedVideoAdUnit = "ca-app-pub-4335424038866907/6860135984";
+//const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/4411468910";
+//const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/6386090517";
 //#else
 //const char* kAdViewAdUnit = "";
 //const char* kInterstitialAdUnit = "";
 //const char* kRewardedVideoAdUnit = "";
 //#endif
+
+// The AdMob app IDs.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+const char* kAdMobAppID = "ca-app-pub-4335424038866907~2928103176";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+const char* kAdMobAppID = "ca-app-pub-4335424038866907~2928103176";
+#else
+const char* kAdMobAppID = "";
+#endif
+
+// These ad units are configured to always serve test ads.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
+//const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/2130553480";//old
+const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/9147645139";//new
+const char* kRewardedVideoAdUnit = "ca-app-pub-4335424038866907/6860135984";
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
+//const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/2130553480";//old
+const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/9147645139";//new
+const char* kRewardedVideoAdUnit = "ca-app-pub-4335424038866907/6860135984";
+#else
+const char* kAdViewAdUnit = "";
+const char* kInterstitialAdUnit = "";
+const char* kRewardedVideoAdUnit = "";
+#endif
 
 #pragma VIDEO ADS CALLBACK
 static void onRewardedVideoLoadAdCompletionCallback(
