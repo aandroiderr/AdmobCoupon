@@ -12,11 +12,11 @@ USING_NS_CC;
 
 using namespace std;
 
-HelloWorld::~HelloWorld(){
+AdmobCouponWrapper::~AdmobCouponWrapper(){
     AdmobManager::getInstance()->setDelegate(nullptr);
 }
 
-void HelloWorld::callbackFromJS(cocos2d::experimental::ui::WebView* webview, const std::string &answer) {
+void AdmobCouponWrapper::callbackFromJS(cocos2d::experimental::ui::WebView* webview, const std::string &answer) {
     std::string response = answer;
     CCLOG("%s",response.c_str());
     if (response.find("backbutton.com") != std::string::npos) {
@@ -44,12 +44,12 @@ void HelloWorld::callbackFromJS(cocos2d::experimental::ui::WebView* webview, con
         adCouponOnClickToUnlock();
     }
 }
-void HelloWorld::redeemClick(std::string url){
+void AdmobCouponWrapper::redeemClick(std::string url){
     CCLOG("%s","DONEDDONE");
     Application::getInstance()->openURL(url);
 }
 
-void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+void AdmobCouponWrapper::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE||keyCode==EventKeyboard::KeyCode::KEY_BACK||keyCode == EventKeyboard::KeyCode::KEY_BACKSPACE)
     {
@@ -63,7 +63,7 @@ void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
     }
 }
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool AdmobCouponWrapper::init()
 {
     if ( !Layer::init() )
     {
@@ -71,7 +71,7 @@ bool HelloWorld::init()
     }
 
     auto touchListener = EventListenerKeyboard::create();
-    touchListener->onKeyReleased =CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
+    touchListener->onKeyReleased =CC_CALLBACK_2(AdmobCouponWrapper::onKeyReleased, this);
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener,this);
 
     //init admob
@@ -80,15 +80,15 @@ bool HelloWorld::init()
     return true;
 }
 
-void HelloWorld::adCouponOnClickToUnlock() {
+void AdmobCouponWrapper::adCouponOnClickToUnlock() {
     log("coupon on click to unlock!");
     AdmobManager::getInstance()->showVideoAds();
 }
 
-void HelloWorld::inititial(){
+void AdmobCouponWrapper::inititial(){
 }
 
-void HelloWorld::showCoupon(){
+void AdmobCouponWrapper::showCoupon(){
     _webView = experimental::ui::WebView::create();
     _webView->setContentSize(Size(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height));
     Point origin=Director::getInstance()->getVisibleOrigin();
@@ -96,22 +96,22 @@ void HelloWorld::showCoupon(){
     _webView->setPosition(origin);
     _webView->setJavascriptInterfaceScheme("cocos2dx");
     _webView->loadURL("https://norahabsentia.github.io/coupons-webview-webpage/index.html");
-    _webView->setOnJSCallback(CC_CALLBACK_2(HelloWorld::callbackFromJS,this));
+    _webView->setOnJSCallback(CC_CALLBACK_2(AdmobCouponWrapper::callbackFromJS,this));
     _webView->setFocusEnabled(false);
     _webView->setFocused(false);
     this->addChild(_webView);
 }
 
-void HelloWorld::showInterstitial(){
+void AdmobCouponWrapper::showInterstitial(){
     AdmobManager::getInstance()->showInterstitialAds();
 }
 
 #pragma mark AdManagerDelegate
-void HelloWorld::AdmobManagerOnVideoClose(){
+void AdmobCouponWrapper::AdmobManagerOnVideoClose(){
     cocos2d::log("===video close");
 }
 
-void HelloWorld::AdmobManagerOnInterstitialClose(){
+void AdmobCouponWrapper::AdmobManagerOnInterstitialClose(){
     cocos2d::log("===interstitial close");
     showCoupon();
 }

@@ -1,5 +1,5 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __AdmobCouponWrapper_SCENE_H__
+#define __AdmobCouponWrapper_SCENE_H__
 
 #include <ui/UIWebView.h>
 #include "cocos2d.h"
@@ -10,7 +10,7 @@
 #include <iomanip>
 #include "AdmobManager.h"
 
-class HelloWorld : public cocos2d::Layer, public AdmobManagerDelegate
+class AdmobCouponWrapper : public cocos2d::Layer, public AdmobManagerDelegate
 {
 public:
     
@@ -57,7 +57,7 @@ public:
     }
 
     
-    ~HelloWorld();
+    ~AdmobCouponWrapper();
     
 	void callbackFromJS(cocos2d::experimental::ui::WebView* webview, const std::string &answer);
     virtual bool init();
@@ -69,7 +69,7 @@ public:
     void adCouponOnClickToUnlock();
 
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(AdmobCouponWrapper);
     
     //AdManager Delegate
     virtual void AdmobManagerOnInterstitialClose();
@@ -80,4 +80,4 @@ public:
     void showInterstitial();
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __AdmobCouponWrapper_SCENE_H__
