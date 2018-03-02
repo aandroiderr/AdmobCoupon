@@ -15,49 +15,32 @@
 
 
 struct AdmobManagerDelegate {
-    /**
-        no coupons available to show.
-     */
-    virtual void AdmobManagerHasNoCouponsAvailable() =0;
+    virtual void AdmobManagerOnInterstitialClose() = 0;
     
-    /**
-        coupons on show.
-     */
-    virtual void AdmobManagerOnShow() =0;
-    
-    /**
-        user clicked the coupon.
-     */
-    virtual void AdmobManagerOnClickToUnlock() =0;
-    
-    /**
-        user clicked redeem and redirected to link
-     */
-    virtual void AdmobManagerOnRedirectToLink() =0;
-    
-    /**
-        user closed the page
-     */
-    virtual void AdmobManagerOnClose() =0;
-    
-    /**
-        stated loading ads
-     */
-    virtual void AdmobManagersOnRequest() =0;
+    virtual void AdmobManagerOnVideoClose() = 0;
 };
 
 class AdmobManager {
 private:
     AdmobManager();
     static AdmobManager * _instance;
-    AdmobManagerDelegate *delegate;
     bool _isInit;
+    
+public:
+    AdmobManagerDelegate * _delegate;
+    
+    //interstitial
+    bool _isInterstitialShow;
     firebase::admob::InterstitialAd * _interstitialAds;
+    firebase::admob::InterstitialAd * _interstitialAdsToDelete;
+    firebase::admob::InterstitialAd::Listener * _interstitialListener;
+    
+    //video
+    bool _isVideoShow;
+    firebase::admob::rewarded_video::Listener * _rewardedVideoListener;
     
 public:
     static AdmobManager * getInstance();
-    
-    firebase::admob::rewarded_video::Listener * _rewardedVideoListener;
     
     firebase::admob::AdRequest createAdRequest();
     
@@ -68,6 +51,8 @@ public:
     void showVideoAds();
     
     void showInterstitialAds();
+    
+    void resetInterstitialAds();
     
 };
 
