@@ -39,6 +39,10 @@ private:
 private:
 	cocos2d::Label* titleLabel;
     
+    
+    
+private:
+    firebase::admob::rewarded_video::Listener * _rewardedVideoListener;
 public:
     firebase::admob::AdRequest createAdRequest();
     void showVideo();

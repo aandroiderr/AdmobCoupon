@@ -97,21 +97,21 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	// Initialize Firebase for Android.
-	firebase::App* app = firebase::App::Create(
-	firebase::AppOptions(), JniHelper::getEnv(), JniHelper::getActivity());
-	// Initialize AdMob.
-	firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~2928103176");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	// Initialize Firebase for iOS.
-	firebase::App* app = firebase::App::Create(firebase::AppOptions());
-	// Initialize AdMob.
-	//firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~8352844340");
-    firebase::admob::Initialize(*app, "ca-app-pub-3940256099942544~1458002511");
-#endif
-	//KietLe
-    firebase::admob::rewarded_video::Initialize();
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//    // Initialize Firebase for Android.
+//    firebase::App* app = firebase::App::Create(
+//    firebase::AppOptions(), JniHelper::getEnv(), JniHelper::getActivity());
+//    // Initialize AdMob.
+//    firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~2928103176");
+//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//    // Initialize Firebase for iOS.
+//    firebase::App* app = firebase::App::Create(firebase::AppOptions());
+//    // Initialize AdMob.
+//    //firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~8352844340");
+//    firebase::admob::Initialize(*app, "ca-app-pub-4335424038866907~2928103176");
+//#endif
+//    //KietLe
+//    firebase::admob::rewarded_video::Initialize();
     // create a scene. it's an autorelease object
     auto scene = HelloWorld::createScene();
 

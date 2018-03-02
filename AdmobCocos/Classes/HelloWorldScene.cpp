@@ -11,6 +11,8 @@
 #include "firebase/admob/interstitial_ad.h"
 #include "firebase/admob/rewarded_video.h"
 
+#include "AdmobManager.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <android/log.h>
 #include <jni.h>
@@ -31,30 +33,30 @@ USING_NS_CC;
 //const char* kRewardedAdUnit =       "ca-app-pub-1303483077276475/3197422259";
 //#endif
 
-// The AdMob app IDs.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-const char* kAdMobAppID = "ca-app-pub-3940256099942544~3347511713";
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-const char* kAdMobAppID = "ca-app-pub-3940256099942544~1458002511";
-#else
-const char* kAdMobAppID = "";
-#endif
-
-// These ad units are configured to always serve test ads.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/6300978111";
-const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/1033173712";
-const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/2888167318";
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
-const char* kInterstitialAdUnit = "ca-app-pub-3940256099942544/4411468910";
-const char* kRewardedVideoAdUnit = "ca-app-pub-3940256099942544/6386090517";
-#else
-const char* kAdViewAdUnit = "";
-const char* kInterstitialAdUnit = "";
-const char* kRewardedVideoAdUnit = "";
-#endif
-
+//// The AdMob app IDs.
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//const char* kAdMobAppID = "ca-app-pub-4335424038866907~2928103176";
+//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//const char* kAdMobAppID = "ca-app-pub-4335424038866907~2928103176";
+//#else
+//const char* kAdMobAppID = "";
+//#endif
+//
+//// These ad units are configured to always serve test ads.
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+//const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
+//const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/2130553480";
+//const char* kRewardedVideoAdUnit = "ca-app-pub-4335424038866907/6860135984";
+//#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+//const char* kAdViewAdUnit = "ca-app-pub-3940256099942544/2934735716";
+//const char* kInterstitialAdUnit = "ca-app-pub-4335424038866907/2130553480";
+//const char* kRewardedVideoAdUnit = "ca-app-pub-4335424038866907/6860135984";
+//#else
+//const char* kAdViewAdUnit = "";
+//const char* kInterstitialAdUnit = "";
+//const char* kRewardedVideoAdUnit = "";
+//#endif
+//
 namespace rewarded_video = firebase::admob::rewarded_video;
 
 
@@ -81,15 +83,20 @@ static void onRewardedVideoLoadAdCompletionCallback(
 }
 
 
-static void onRewardedVideoShowAdCompletionCallback(
-                                                    const firebase::Future<void>& future, void* userData) {
-    HelloWorld* scene = static_cast<HelloWorld*>(userData);
-    if (future.error() == firebase::admob::kAdMobErrorNone) {
-        log("Show rewarded video completed successfully.");
-    } else {
-        log("Show rewarded video with error code[%d][%s]",future.error(), future.error_message());
+// A simple listener that logs changes to rewarded video state.
+class LoggingRewardedVideoListener
+: public firebase::admob::rewarded_video::Listener {
+public:
+    LoggingRewardedVideoListener() {}
+    void OnRewarded(firebase::admob::rewarded_video::RewardItem reward) override {
+        log("Rewarding user with %f %s.", reward.amount,
+                   reward.reward_type.c_str());
     }
-}
+    void OnPresentationStateChanged(
+                                    firebase::admob::rewarded_video::PresentationState state) override {
+        log("Rewarded video PresentationState has changed to %d.", state);
+    }
+};
 
 
 Scene* HelloWorld::createScene()
@@ -171,6 +178,7 @@ bool HelloWorld::init()
 		
 //    _state = kNextStepLoadAd;
 //    scheduleUpdate();
+    AdmobManager::getInstance()->initialize();
 	
     return true;
 }
@@ -186,8 +194,15 @@ void HelloWorld::LoadRewardedVideo()
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-    firebase::admob::rewarded_video::LoadAd(kRewardedVideoAdUnit, createAdRequest());
-    rewarded_video::LoadAdLastResult().OnCompletion(onRewardedVideoLoadAdCompletionCallback, this);
+//    if (!_rewardedVideoListener){
+//        _rewardedVideoListener = new LoggingRewardedVideoListener();
+//    }
+//    rewarded_video::SetListener(_rewardedVideoListener);
+//
+//    firebase::admob::rewarded_video::LoadAd("ca-app-pub-4335424038866907/6860135984", createAdRequest());
+//    rewarded_video::LoadAdLastResult().OnCompletion(onRewardedVideoLoadAdCompletionCallback, this);
+    
+    AdmobManager::getInstance()->showVideoAds();
 }
 
 firebase::admob::AdRequest HelloWorld::createAdRequest(){
@@ -202,46 +217,9 @@ firebase::admob::AdRequest HelloWorld::createAdRequest(){
 
 void HelloWorld::update(float delta) 
 {
-    //CCLOG("===state[%d]", _state);
-
-    switch(_state){
-        case kNextStepLoadAd:
-            if(firebase::admob::rewarded_video::InitializeLastResult().status() == firebase::kFutureStatusComplete &&
-               firebase::admob::rewarded_video::InitializeLastResult().error() == firebase::admob::kAdMobErrorNone)
-            {
-                //firebase::admob::rewarded_video::LoadAd("ca-app-pub-4335424038866907/6860135984", my_ad_request);
-                firebase::admob::rewarded_video::LoadAd(kRewardedVideoAdUnit, createAdRequest());
-                _state = kNextStepShowAd;
-            }
-            break;
-
-        case kNextStepShowAd:
-            if (rewarded_video::LoadAdLastResult().status() ==
-                firebase::kFutureStatusComplete &&
-                rewarded_video::LoadAdLastResult().error() ==
-                firebase::admob::kAdMobErrorNone) {
-                rewarded_video::Show(getAdParent());
-            }
-
-            if (rewarded_video::ShowLastResult().status() ==
-                firebase::kFutureStatusComplete &&
-                rewarded_video::ShowLastResult().error() ==
-                firebase::admob::kAdMobErrorNone &&
-                rewarded_video::presentation_state() ==
-                rewarded_video::kPresentationStateHidden) {
-                // If the rewarded video has been displayed to the user and
-                // the user closed the ad, then reward the user.
-                _state = kNextStepRewardUser;
-            }
-            break;
-
-        default:
-            break;
-    }
 }
 
 void HelloWorld::showVideo(){
     log("===show video");
     rewarded_video::Show(getAdParent());
-    rewarded_video::ShowLastResult().OnCompletion(onRewardedVideoShowAdCompletionCallback, this);
 }

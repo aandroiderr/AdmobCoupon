@@ -13,6 +13,8 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D631D0D56D500F7F5D4 /* CoreText.framework */; };
+		2A61FBD020493E2C00182BBF /* AdmobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */; };
+		2A61FBD120493E2C00182BBF /* AdmobManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */; };
 		2AC7025A2047A22100F06640 /* firebase_admob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC702582047A22100F06640 /* firebase_admob.framework */; };
 		2AC7025B2047A22100F06640 /* firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC702592047A22100F06640 /* firebase.framework */; };
 		2AC7025F2047A2AE00F06640 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC7025D2047A2AE00F06640 /* GameController.framework */; };
@@ -126,6 +128,8 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		294D0D631D0D56D500F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		2A0653E0204920D500F0D7DA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdmobManager.cpp; sourceTree = "<group>"; };
+		2A61FBCF20493E2C00182BBF /* AdmobManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdmobManager.h; sourceTree = "<group>"; };
 		2AC702582047A22100F06640 /* firebase_admob.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase_admob.framework; path = ../../firebase_cpp_sdk/frameworks/ios/universal/firebase_admob.framework; sourceTree = "<group>"; };
 		2AC702592047A22100F06640 /* firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = firebase.framework; path = ../../firebase_cpp_sdk/frameworks/ios/universal/firebase.framework; sourceTree = "<group>"; };
 		2AC7025D2047A2AE00F06640 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.0.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
@@ -334,6 +338,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2A61FBCE20493E2B00182BBF /* AdmobManager.cpp */,
+				2A61FBCF20493E2C00182BBF /* AdmobManager.h */,
 				2AC702652047A82900F06640 /* FirebaseHelper.cpp */,
 				2AC702642047A82900F06640 /* FirebaseHelper.h */,
 				2AC702632047A82900F06640 /* UnityAdsNativeAPI.h */,
@@ -614,6 +620,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				2A61FBD120493E2C00182BBF /* AdmobManager.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				2AC702672047A82900F06640 /* FirebaseHelper.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
@@ -626,6 +633,7 @@
 			files = (
 				2AC702662047A82900F06640 /* FirebaseHelper.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				2A61FBD020493E2C00182BBF /* AdmobManager.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
 				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 			);
