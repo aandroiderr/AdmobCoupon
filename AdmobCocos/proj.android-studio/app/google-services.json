@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "940896672110",
+    "firebase_url": "https://jabeli-absentiavr-android.firebaseio.com",
+    "project_id": "jabeli-absentiavr-android",
+    "storage_bucket": "jabeli-absentiavr-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940896672110:android:54ed0bc41bb15c70",
+        "android_client_info": {
+          "package_name": "com.happyadda.jalebi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940896672110-70htc25oh31fi0glrt7ciosoh6266ngn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVGzc0vQxCB2_WEKHTjdaqWLRYwbNadM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940896672110:android:5c0ddaef165f3c33",
+        "android_client_info": {
+          "package_name": "org.cocos2dx.hellocpp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940896672110-uje41qsvjli7vb40edt7qhogqml74b54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.cocos2dx.hellocpp",
+            "certificate_hash": "0b3290e7ed89e6a9620266b87228091706e21e4a"
+          }
+        },
+        {
+          "client_id": "940896672110-70htc25oh31fi0glrt7ciosoh6266ngn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyVGzc0vQxCB2_WEKHTjdaqWLRYwbNadM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940896672110-70htc25oh31fi0glrt7ciosoh6266ngn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
