@@ -22,6 +22,7 @@ bool TestScene::init()
     addChild(LayerColor::create(Color4B(113,102,225,255)));
     
     _couponWrapper = AdmobCouponWrapper::create();
+    _couponWrapper->setDelegate(this);
     addChild(_couponWrapper);
     
     auto btn = ui::Button::create();
@@ -35,5 +36,13 @@ bool TestScene::init()
 
     
     return true;
+}
+
+#pragma mark AdManagerDelegate
+void TestScene::AdmobManagerOnVideoClose(){
+}
+
+void TestScene::AdmobManagerOnInterstitialClose(){
+    _couponWrapper->showCoupon();
 }
 

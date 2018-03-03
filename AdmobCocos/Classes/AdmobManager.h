@@ -16,7 +16,6 @@
 
 struct AdmobManagerDelegate {
     virtual void AdmobManagerOnInterstitialClose() = 0;
-    
     virtual void AdmobManagerOnVideoClose() = 0;
 };
 

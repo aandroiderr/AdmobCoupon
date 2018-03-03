@@ -5,7 +5,7 @@
 #include "ui/CocosGUI.h"
 #include "AdmobCouponWrapper.h"
 
-class TestScene : public cocos2d::Scene
+class TestScene : public cocos2d::Scene, public AdmobManagerDelegate
 {
 private:
     AdmobCouponWrapper * _couponWrapper;
@@ -17,6 +17,11 @@ public:
 
     // implement the "static create()" method manually
     CREATE_FUNC(TestScene);
+    
+    
+    //AdmobManagerDelegate
+    virtual void AdmobManagerOnInterstitialClose();
+    virtual void AdmobManagerOnVideoClose();
 };
 
 #endif // __TestScene_SCENE_H__
